@@ -1,13 +1,13 @@
 import MainArea from "../MainArea/MainArea";
-import Sidebar from "../Sidebar/Sidebar";
+// import Sidebar from "../Sidebar/Sidebar";
 
 export default function Workarea({ children }) {
   return (
     <div id="main" className="main">
       <div className="grid-container">
-        <div className="grid-100 grid-parent main-inner">
+        <div className="grid-100 grid-parent">
           <MainArea>{children}</MainArea>
-          <Sidebar />
+          {/* <Sidebar /> */}
         </div>
       </div>
     </div>

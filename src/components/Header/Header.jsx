@@ -21,15 +21,14 @@ export default function Header() {
                     className="site-title"
                     itemProp="headline"
                   >
-                    ConsultApp.ru
+                    Post Reader
                   </h1>
                   <p
                     id="site-description"
                     className="site-description font-primary"
                     itemProp="description"
                   >
-                    Автоматизация бизнес-процессов, сопровождение информационных
-                    систем
+                    Post reader for Wordpress.
                   </p>
                 </div>
               </div>

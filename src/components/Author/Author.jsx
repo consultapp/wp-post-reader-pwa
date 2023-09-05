@@ -1,4 +1,4 @@
-export default function Author({ date, author = "Дмитрий" }) {
+export default function Author({ date, author = "Автор" }) {
   const d = new Date(date);
   return (
     <div className="entry-byline small font-secondary">

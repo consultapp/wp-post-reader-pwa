@@ -31,24 +31,6 @@ export default function Menu({ isOpen, toggleButton }) {
           >
             <Link to="/">Статьи</Link>
           </li>
-          <li
-            id="menu-item-1530"
-            className="menu-item menu-item-type-post_type menu-item-object-page menu-item-1530"
-          >
-            <Link to="/page/projects-react-next/">React/Next</Link>
-          </li>
-          <li
-            id="menu-item-1106"
-            className="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1106"
-          >
-            <Link to="/post/simple-bot-for-telegram-php/">Telegram Bots</Link>
-          </li>
-          <li
-            id="menu-item-857"
-            className="menu-item menu-item-type-custom menu-item-object-custom menu-item-857"
-          >
-            <a href="mailto:info@consultapp.ru">info@consultapp.ru</a>
-          </li>
         </ul>
       )}
     </nav>

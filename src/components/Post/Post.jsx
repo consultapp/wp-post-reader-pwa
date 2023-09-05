@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import Author from "../Author/Author";
 
 export default function Post({ isLoading, post }) {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
   if (isLoading) return <Loading />;
   if (!post) return <div>Post Error???</div>;
 
@@ -29,6 +33,13 @@ export default function Post({ isLoading, post }) {
       </header>
       <div className="entry-summary" itemProp="description">
         <div dangerouslySetInnerHTML={{ __html: content }}></div>
+      </div>
+      <div>
+        <center>
+          <button id="menu-toggle" className="" type="button" onClick={goBack}>
+            Назад
+          </button>
+        </center>
       </div>
     </article>
   );
