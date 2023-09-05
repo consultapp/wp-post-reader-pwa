@@ -11,7 +11,10 @@ export const fetchPostNav = createAsyncThunk(
       return rejectWithValue(LOADING_STATUS.earlyAdded);
     }
 
-    const url = new URL("posts", import.meta.env.VITE_API_BASE_URL);
+    const url = new URL(
+      "posts",
+      import.meta.env.VITE_SITE_BASE_URL + import.meta.env.VITE_API_BASE_URL
+    );
     url.searchParams.set("_fields", "id");
     url.searchParams.set("per_page", "100");
 

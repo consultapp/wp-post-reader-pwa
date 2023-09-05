@@ -26,7 +26,10 @@ export const fetchPost = createAsyncThunk(
       return rejectWithValue(LOADING_STATUS.earlyAdded);
     }
 
-    const url = new URL("posts", import.meta.env.VITE_API_BASE_URL);
+    const url = new URL(
+      "posts",
+      import.meta.env.VITE_SITE_BASE_URL + import.meta.env.VITE_API_BASE_URL
+    );
 
     const fields = `id,title,categories,excerpt,date,link,type,slug,modified${
       loadFull ? ",content" : ""

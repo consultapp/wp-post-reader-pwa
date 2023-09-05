@@ -11,7 +11,10 @@ async function searchByText(text) {
   if (!text) return;
 
   const regexp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi;
-  const url = new URL("search", import.meta.env.VITE_API_BASE_URL);
+  const url = new URL(
+    "search",
+    import.meta.env.VITE_SITE_BASE_URL + import.meta.env.VITE_API_BASE_URL
+  );
   url.searchParams.set("per_page", import.meta.env.VITE_SEARCH_PER_PAGE || 5);
   url.searchParams.set("search", text.replaceAll(regexp, ""));
 

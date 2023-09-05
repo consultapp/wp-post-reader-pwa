@@ -13,7 +13,10 @@ export const fetchPage = createAsyncThunk(
       return rejectWithValue(LOADING_STATUS.earlyAdded);
     }
 
-    const url = new URL("pages", import.meta.env.VITE_API_BASE_URL);
+    const url = new URL(
+      "pages",
+      import.meta.env.VITE_SITE_BASE_URL + import.meta.env.VITE_API_BASE_URL
+    );
     const fields = `id,title,content,date,link,slug,modified,author`;
     url.searchParams.set("_fields", fields);
     if (slug) url.searchParams.set("slug", slug);
