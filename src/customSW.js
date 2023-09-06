@@ -1,46 +1,49 @@
-const CACHE_NAME = "version-1";
-// const urlsToCache = [];
+const staticCacheName = "s-app-v3";
+const dynamicCacheName = "d-app-v3";
 
-const self = this;
+const assetUrls = [];
 
-// Install SW
-self.addEventListener("install", (event) => {
-  event
-    .waitUntil
-    // caches.open(CACHE_NAME).then((cache) => {
-    //   console.log("Opened cache");
-
-    //   //   return cache.addAll(urlsToCache);
-    // })
-    ();
+self.addEventListener("install", async () => {
+  const cache = await caches.open(staticCacheName);
+  await cache.addAll(assetUrls);
 });
 
-// Listen for requests
+self.addEventListener("activate", async () => {
+  const cacheNames = await caches.keys();
+  await Promise.all(
+    cacheNames
+      .filter((name) => name !== staticCacheName)
+      .filter((name) => name !== dynamicCacheName)
+      .map((name) => caches.delete(name))
+  );
+});
+
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then(() => {
-      return fetch(event.request).catch(() => {
-        console.log("Offline");
-        // caches.match("offline.html");
-      });
-    })
-  );
+  const { request } = event;
+
+  // const url = new URL(request.url);
+  // if (url.origin === location.origin) {
+  event.respondWith(cacheFirst(request));
+  // } else {
+  //   event.respondWith(networkFirst(request));
+  // }
 });
 
-// Activate the SW
-self.addEventListener("activate", (event) => {
-  const cacheWhitelist = [];
-  cacheWhitelist.push(CACHE_NAME);
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  return cached ?? (await fetch(request));
+}
 
-  event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
-      )
-    )
-  );
-});
+async function networkFirst(request) {
+  const cache = await caches.open(dynamicCacheName);
+  try {
+    const response = await fetch(request);
+    await cache.put(request, response.clone());
+    return response;
+  } catch (e) {
+    const cached = await cache.match(request);
+    console.log("offline.html");
+    // return cached ?? (await caches.match("/offline.html"));
+    return cached ?? "";
+  }
+}
