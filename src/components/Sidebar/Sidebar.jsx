@@ -16,7 +16,7 @@ export default function Sidebar() {
       >
         Sidebar
       </h3>
-      <p>Набор плагинов.</p>
+      <SearchContainer />
       <div className="sidebar-inner"></div>
     </aside>
   );
