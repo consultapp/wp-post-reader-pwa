@@ -18,7 +18,7 @@ export default function Pagination({ postsCount, pageIndex }) {
             key={`pageIndex-${pageIndex - 1}`}
             to={`/posts/${pageIndex - 1}/`}
           >
-            ← Ранее
+            ←
           </Link>
         )}
         {new Array(pageCount).fill(0).map((_, i) => {
@@ -47,7 +47,7 @@ export default function Pagination({ postsCount, pageIndex }) {
             key={`pageIndex-${pageIndex + 1}`}
             to={`/posts/${pageIndex + 1}/`}
           >
-            Далее →
+            →
           </Link>
         )}
       </div>

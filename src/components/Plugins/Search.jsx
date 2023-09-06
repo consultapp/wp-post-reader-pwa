@@ -17,7 +17,7 @@ export default function Search({ result, search, handleSearchChange }) {
             value={search}
             onChange={handleSearchChange}
           />
-        </label>{" "}
+        </label>
         {data.length > 0 && loadingStatus === LOADING_STATUS.fulfilled && (
           <ul className={styles.search}>
             {data.map((item) => {
