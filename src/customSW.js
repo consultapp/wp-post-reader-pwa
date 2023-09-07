@@ -82,11 +82,15 @@ self.addEventListener(
 );
 
 self.addEventListener("message", (event) => {
-  console.log(`SW: Message received: ${event.data}`);
-  sendMessage({
-    type: "MESSAGE",
-    payload: `SW Answer: Message received: ${event.data}`,
-  });
+  const { data } = event;
+  console.log("SW: Message received:", data);
+  if (data.type === "SHOW_GOTO_NOTIFICATION") {
+    event.waitUntil(showGoToNotification(data.data));
+  }
+  // sendMessage({
+  //   type: "MESSAGE",
+  //   payload: `SW Answer: Message received: ${event.data}`,
+  // });
 });
 
 async function messageClient(clientId, data) {
@@ -102,6 +106,21 @@ async function sendMessage(data) {
       return client.postMessage(data);
     })
   );
+}
+
+async function showGoToNotification(data) {
+  if (!(self.Notification && self.Notification.permission === "granted")) {
+    return;
+  }
+  const title = data.title || "";
+  const icon = "/logo.png";
+
+  self.registration.showNotification("Открыть статью", {
+    body: title,
+    data,
+    tag: "sgo-to-notification",
+    icon,
+  });
 }
 
 // async function messageAllClients(data, openNewClient = false) {

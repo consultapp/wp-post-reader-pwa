@@ -4,17 +4,21 @@ function notifyMe(title, url) {
       if ("setAppBadge" in navigator) navigator.setAppBadge(true);
 
       navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification("Открыть статью", {
-          body: title,
+        registration.active.postMessage({
+          type: "SHOW_GOTO_NOTIFICATION",
           data: { title, url },
-          icon: "/logo.svg",
-          // actions: [
-          //   {
-          //     action: "hide",
-          //     title: "Hide",
-          //   },
-          // ],
         });
+        // registration.showNotification("Открыть статью", {
+        //   body: title,
+        //   data: { title, url },
+        //   icon: "/logo.svg",
+        //   // actions: [
+        //   //   {
+        //   //     action: "hide",
+        //   //     title: "Hide",
+        //   //   },
+        //   // ],
+        // });
       });
     }
   });
@@ -33,11 +37,6 @@ export default function NotificationButtonOpenPost({ title, url }) {
     </span>
   );
 }
-
-// navigator.serviceWorker.ready.then((registration) => {
-//   console.log("WINDOW: page msq sent");
-//   registration.active.postMessage("Notification have sent.");
-// });
 
 // if (!("Notification" in window)) {
 //   // Check if the browser supports notifications
