@@ -59,7 +59,13 @@ self.addEventListener(
             for (const client of clientList) {
               if ("focus" in client) {
                 client.focus();
-                if (data.url) client.navigate(data.url);
+                if (data.url) {
+                  // client.navigate(data.url);
+                  messageClient(client.id, {
+                    type: "NAVIGATE_TO",
+                    payload: data.url,
+                  });
+                }
                 messageClient(client.id, { type: "CLEAR_BADGE" });
               }
             }
