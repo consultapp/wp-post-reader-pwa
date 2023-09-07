@@ -1,14 +1,12 @@
 import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
 import { clientsClaim } from "workbox-core";
-
-cleanupOutdatedCaches();
-
-precacheAndRoute(self.__WB_MANIFEST);
-
 self.skipWaiting();
 clientsClaim();
 
-const cacheVersion = "v5";
+cleanupOutdatedCaches();
+precacheAndRoute(self.__WB_MANIFEST);
+
+const cacheVersion = "v6";
 const staticCacheName = "s-app-" + cacheVersion;
 const dynamicCacheName = "d-app-" + cacheVersion;
 

@@ -1226,11 +1226,11 @@ function ie(a, e) {
 function oe() {
   self.addEventListener("activate", () => self.clients.claim());
 }
-ce();
-ie([{"revision":null,"url":"assets/index-c5a39e91.js"},{"revision":null,"url":"assets/index-c7caa306.css"},{"revision":"1d144054f6b3146deab68f6fc8da47e9","url":"index.html"},{"revision":"c3cd57c7634b3cd71d789048dc28980d","url":"registerSW.js"},{"revision":"9cb2f31c709cfc7dbc2b0266d1540841","url":"favicon.ico"},{"revision":"1d39a9457ee3af131f98fff2393644d5","url":"apple-touch-icon.png"},{"revision":"40f73a3e5d62b60229d10165c0d33d0e","url":"safari-pinned-tab.svg"},{"revision":"62e321804437ab72b565a350b4e4031e","url":"manifest-icon-192.maskable.png"},{"revision":"338d340b3088b8bc6e211249a9f8029e","url":"manifest-icon-512.maskable.png"},{"revision":"1f7873a2550d7f8d78d47dac801c84ce","url":"manifest.webmanifest"}]);
 self.skipWaiting();
 oe();
-const T = "v5", E = "s-app-" + T, le = "d-app-" + T, he = [];
+ce();
+ie([{"revision":null,"url":"assets/index-444ee569.js"},{"revision":null,"url":"assets/index-c7caa306.css"},{"revision":"9a995a7e42cfb5e0e34762ac7d994152","url":"index.html"},{"revision":"c3cd57c7634b3cd71d789048dc28980d","url":"registerSW.js"},{"revision":"9cb2f31c709cfc7dbc2b0266d1540841","url":"favicon.ico"},{"revision":"1d39a9457ee3af131f98fff2393644d5","url":"apple-touch-icon.png"},{"revision":"40f73a3e5d62b60229d10165c0d33d0e","url":"safari-pinned-tab.svg"},{"revision":"62e321804437ab72b565a350b4e4031e","url":"manifest-icon-192.maskable.png"},{"revision":"338d340b3088b8bc6e211249a9f8029e","url":"manifest-icon-512.maskable.png"},{"revision":"2264635fd04fce9834036299778a271a","url":"manifest.webmanifest"}]);
+const T = "v6", E = "s-app-" + T, le = "d-app-" + T, he = [];
 self.addEventListener("install", async () => {
   await (await caches.open(E)).addAll(he);
 });

@@ -7,7 +7,7 @@ export default function EventSWListeners() {
         const { data } = e;
         console.log("WINDOW: data from SW", data);
         if (data.type === "CLEAR_BADGE") {
-          navigator.clearAppBadge();
+          if ("setAppBadge" in navigator) navigator.clearAppBadge();
         }
       });
     });

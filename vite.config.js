@@ -14,23 +14,16 @@ export default defineConfig({
         enabled: true,
         type: "module",
       },
-      workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
-      },
-      includeAssets: [
-        "favicon.ico",
-        "apple-touch-icon.png",
-        "safari-pinned-tab.svg",
-      ],
       manifest: {
         name: "PWA | Wordpress posts reader",
         short_name: "PWA WP post reader",
-        theme_color: "#ffffff",
-        background_color: "#000000",
-        display: "standalone",
-        orientation: "portrait",
-        scope: "/",
         start_url: "/",
+        display: "standalone",
+        background_color: "#000000",
+        lang: "ru",
+        scope: "/",
+        theme_color: "#ffffff",
+        orientation: "portrait",
         icons: [
           {
             src: "/manifest-icon-192.maskable.png",
@@ -58,6 +51,15 @@ export default defineConfig({
           },
         ],
       },
+
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+      },
+      includeAssets: [
+        "favicon.ico",
+        "apple-touch-icon.png",
+        "safari-pinned-tab.svg",
+      ],
     }),
   ],
 });

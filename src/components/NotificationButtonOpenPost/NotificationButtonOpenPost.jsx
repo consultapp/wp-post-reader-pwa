@@ -1,7 +1,8 @@
 function notifyMe(title, url) {
   Notification.requestPermission().then((result) => {
     if (result === "granted") {
-      navigator.setAppBadge(true);
+      if ("setAppBadge" in navigator) navigator.setAppBadge(true);
+
       navigator.serviceWorker.ready.then((registration) => {
         registration.showNotification("Открыть статью", {
           body: title,
@@ -21,7 +22,7 @@ function notifyMe(title, url) {
 
 export default function NotificationButtonOpenPost({ title, url }) {
   return (
-    <a
+    <span
       className="entry-more-link"
       onClick={(e) => {
         e.preventDefault();
@@ -29,7 +30,7 @@ export default function NotificationButtonOpenPost({ title, url }) {
       }}
     >
       <span>Открыть через уведомление</span>
-    </a>
+    </span>
   );
 }
 
