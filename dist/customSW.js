@@ -1212,7 +1212,7 @@ function ae(a) {
 function ne(a, e) {
   ae(a), se(e);
 }
-ne([{"revision":null,"url":"assets/index-08e7bb83.js"},{"revision":null,"url":"assets/index-c7caa306.css"},{"revision":"02dde733e1635a2201bddd50aa62da0c","url":"index.html"},{"revision":"c3cd57c7634b3cd71d789048dc28980d","url":"registerSW.js"},{"revision":"9cb2f31c709cfc7dbc2b0266d1540841","url":"favicon.ico"},{"revision":"1d39a9457ee3af131f98fff2393644d5","url":"apple-touch-icon.png"},{"revision":"40f73a3e5d62b60229d10165c0d33d0e","url":"safari-pinned-tab.svg"},{"revision":"62e321804437ab72b565a350b4e4031e","url":"manifest-icon-192.maskable.png"},{"revision":"338d340b3088b8bc6e211249a9f8029e","url":"manifest-icon-512.maskable.png"},{"revision":"1f7873a2550d7f8d78d47dac801c84ce","url":"manifest.webmanifest"}]);
+ne([{"revision":null,"url":"assets/index-c7caa306.css"},{"revision":null,"url":"assets/index-f9f6318e.js"},{"revision":"591b8736f5483466c875339344b6b23b","url":"index.html"},{"revision":"c3cd57c7634b3cd71d789048dc28980d","url":"registerSW.js"},{"revision":"9cb2f31c709cfc7dbc2b0266d1540841","url":"favicon.ico"},{"revision":"1d39a9457ee3af131f98fff2393644d5","url":"apple-touch-icon.png"},{"revision":"40f73a3e5d62b60229d10165c0d33d0e","url":"safari-pinned-tab.svg"},{"revision":"62e321804437ab72b565a350b4e4031e","url":"manifest-icon-192.maskable.png"},{"revision":"338d340b3088b8bc6e211249a9f8029e","url":"manifest-icon-512.maskable.png"},{"revision":"1f7873a2550d7f8d78d47dac801c84ce","url":"manifest.webmanifest"}]);
 const T = "v4", N = "s-app-" + T, ce = "d-app-" + T, re = [];
 self.addEventListener("install", async () => {
   await (await caches.open(N)).addAll(re);
