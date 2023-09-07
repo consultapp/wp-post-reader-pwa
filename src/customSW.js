@@ -72,7 +72,7 @@ self.addEventListener(
           else if (self.clients.openWindow) {
             if (data.url)
               self.clients
-                .openWindow(data.url ?? "/")
+                .openWindow(data.url)
                 .then((client) => (client ? client.focus() : null));
           }
         })
