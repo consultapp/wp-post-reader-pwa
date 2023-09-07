@@ -3,7 +3,7 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
 // self.skipWaiting();
 // clientsClaim();
 
-// cleanupOutdatedCaches();
+cleanupOutdatedCaches();
 precacheAndRoute(self.__WB_MANIFEST);
 
 const cacheVersion = "v6";
