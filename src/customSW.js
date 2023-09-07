@@ -1,3 +1,7 @@
+import { precacheAndRoute } from "workbox-precaching";
+
+precacheAndRoute(self.__WB_MANIFEST);
+
 const cacheVersion = "v4";
 const staticCacheName = "s-app-" + cacheVersion;
 const dynamicCacheName = "d-app-" + cacheVersion;
