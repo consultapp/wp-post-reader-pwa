@@ -39,7 +39,7 @@ function initNotifications() {
 
   self.addEventListener("message", (event) => {
     const { data } = event;
-    console.log("SW: Message received:", data);
+    // console.log("SW: Message received:", data);
     if (data.type === "SHOW_GOTO_NOTIFICATION") {
       event.waitUntil(showGoToNotification(data.data));
     }
