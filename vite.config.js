@@ -12,6 +12,7 @@ export default defineConfig({
       filename: "customSW.js",
       devOptions: {
         enabled: true,
+        type: "module",
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],

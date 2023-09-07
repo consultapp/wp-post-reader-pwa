@@ -1,8 +1,7 @@
 function notifyMe(title, url) {
-  navigator.setAppBadge(true);
-
   Notification.requestPermission().then((result) => {
     if (result === "granted") {
+      navigator.setAppBadge(true);
       navigator.serviceWorker.ready.then((registration) => {
         registration.showNotification("Открыть статью", {
           body: title,
