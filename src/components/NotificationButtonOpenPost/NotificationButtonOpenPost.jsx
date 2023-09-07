@@ -29,7 +29,7 @@ export default function NotificationButtonOpenPost({ title, url }) {
         notifyMe(title, url);
       }}
     >
-      <span>Открыть через уведомление.</span>
+      <span>Открыть через уведомление</span>
     </a>
   );
 }
