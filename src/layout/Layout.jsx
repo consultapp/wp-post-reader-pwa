@@ -3,6 +3,7 @@ import FooterContainer from "../containers/Footer/Footer";
 import Workarea from "../components/Workarea/Workarea";
 import { useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
+import EventListeners from "../containers/EventSWListeners/EventSWListeners";
 
 export default function Layout({ children }) {
   const { pathname } = useLocation();
@@ -13,6 +14,7 @@ export default function Layout({ children }) {
 
   return (
     <>
+      <EventListeners />
       <HeaderContainer />
       <Workarea>{children}</Workarea>
       <FooterContainer />

@@ -5,3 +5,9 @@ export const LOADING_STATUS = {
   rejected: "rejected",
   notfound: "notfound",
 };
+
+export const NETWORK_STATUS = {
+  idle: "idle",
+  online: "online",
+  offline: "offline",
+};

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import Author from "../Author/Author";
 import styles from "./style.module.css";
+import NotificationButtonOpenPost from "../NotificationButtonOpenPost/NotificationButtonOpenPost";
 
 export default function PostShort({ isLoading, post }) {
   if (isLoading) return <Loading />;
@@ -35,6 +36,7 @@ export default function PostShort({ isLoading, post }) {
           <span className="screen-reader-text">{title}</span>
         </Link>
       </div>
+      <NotificationButtonOpenPost title={title} url={`/post/${slug}`} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
-const staticCacheName = "s-app-v3";
-const dynamicCacheName = "d-app-v3";
+const cacheVersion = "v4";
+const staticCacheName = "s-app-" + cacheVersion;
+const dynamicCacheName = "d-app-" + cacheVersion;
 
 const assetUrls = [];
 
@@ -34,16 +35,86 @@ async function cacheFirst(request) {
   return cached ?? (await fetch(request));
 }
 
-async function networkFirst(request) {
-  const cache = await caches.open(dynamicCacheName);
-  try {
-    const response = await fetch(request);
-    await cache.put(request, response.clone());
-    return response;
-  } catch (e) {
-    const cached = await cache.match(request);
-    console.log("offline.html");
-    // return cached ?? (await caches.match("/offline.html"));
-    return cached ?? "";
-  }
+self.addEventListener(
+  "notificationclick",
+  (event) => {
+    const { data } = event.notification;
+
+    event.notification.close();
+    event.waitUntil(
+      self.clients
+        .matchAll({
+          type: "window",
+        })
+        .then((clientList) => {
+          if (clientList.length)
+            for (const client of clientList) {
+              if ("focus" in client) {
+                client.focus();
+                if (data.url) client.navigate(data.url);
+                messageClient(client.id, { type: "CLEAR_BADGE" });
+              }
+            }
+          else if (self.clients.openWindow) {
+            if (data.url)
+              self.clients
+                .openWindow(data.url ?? "/")
+                .then((client) => (client ? client.focus() : null));
+          }
+        })
+    );
+  },
+  false
+);
+
+self.addEventListener("message", (event) => {
+  console.log(`SW: Message received: ${event.data}`);
+  sendMessage({
+    type: "MESSAGE",
+    payload: `SW Answer: Message received: ${event.data}`,
+  });
+});
+
+async function messageClient(clientId, data) {
+  const client = await self.clients.get(clientId);
+  client.postMessage(data);
 }
+
+async function sendMessage(data) {
+  let allClients = await self.clients.matchAll({ includeUncontrolled: true });
+  return Promise.all(
+    allClients.map((client) => {
+      let channel = new MessageChannel();
+      return client.postMessage(data);
+    })
+  );
+}
+
+// async function messageAllClients(data, openNewClient = false) {
+//   self.clients
+//     .matchAll({
+//       type: "window",
+//     })
+//     .then((clientList) => {
+//       if (clientList.length) {
+//         for (const client of clientList) {
+//           client.postMessage(data);
+//         }
+//       } else if (openNewClient && self.clients.openWindow) {
+//         self.clients.then((client) => client.postMessage(data));
+//       }
+//     });
+// }
+// async function networkFirst(request) {
+//   const cache = await caches.open(dynamicCacheName);
+//   try {
+//     const response = await fetch(request);
+//     await cache.put(request, response.clone());
+//     return response;
+//   } catch (e) {
+//     const cached = await cache.match(request);
+//     console.log("offline.html");
+//     // return cached ?? (await caches.match("/offline.html"));
+//     return cached ?? "";
+//   }
+// }
