@@ -2,10 +2,10 @@ try {
   self["workbox:core:7.0.0"] && _();
 } catch {
 }
-const v = (a, ...e) => {
+const x = (a, ...e) => {
   let t = a;
   return e.length > 0 && (t += ` :: ${JSON.stringify(e)}`), t;
-}, x = v;
+}, M = x;
 class l extends Error {
   /**
    *
@@ -16,7 +16,7 @@ class l extends Error {
    * be added as a key on the context object.
    */
   constructor(e, t) {
-    const s = x(e, t);
+    const s = M(e, t);
     super(s), this.name = e, this.details = t;
   }
 }
@@ -26,12 +26,12 @@ const f = {
   prefix: "workbox",
   runtime: "runtime",
   suffix: typeof registration < "u" ? registration.scope : ""
-}, b = (a) => [f.prefix, a, f.suffix].filter((e) => e && e.length > 0).join("-"), M = (a) => {
+}, b = (a) => [f.prefix, a, f.suffix].filter((e) => e && e.length > 0).join("-"), O = (a) => {
   for (const e of Object.keys(f))
     a(e);
 }, C = {
   updateDetails: (a) => {
-    M((e) => {
+    O((e) => {
       typeof a[e] == "string" && (f[e] = a[e]);
     });
   },
@@ -49,7 +49,7 @@ try {
   self["workbox:precaching:7.0.0"] && _();
 } catch {
 }
-const O = "__WB_REVISION__";
+const A = "__WB_REVISION__";
 function I(a) {
   if (!a)
     throw new l("add-to-cache-list-unexpected-type", { entry: a });
@@ -71,12 +71,12 @@ function I(a) {
     };
   }
   const s = new URL(t, location.href), n = new URL(t, location.href);
-  return s.searchParams.set(O, e), {
+  return s.searchParams.set(A, e), {
     cacheKey: s.href,
     url: n.href
   };
 }
-class A {
+class W {
   constructor() {
     this.updatedURLs = [], this.notUpdatedURLs = [], this.handlerWillStart = async ({ request: e, state: t }) => {
       t && (t.originalRequest = e);
@@ -89,7 +89,7 @@ class A {
     };
   }
 }
-class W {
+class S {
   constructor({ precacheController: e }) {
     this.cacheKeyWillBeUsed = async ({ request: t, params: s }) => {
       const n = (s == null ? void 0 : s.cacheKey) || this._precacheController.getCacheKeyForURL(t.url);
@@ -98,7 +98,7 @@ class W {
   }
 }
 let g;
-function S() {
+function D() {
   if (g === void 0) {
     const a = new Response("");
     if ("body" in a)
@@ -111,7 +111,7 @@ function S() {
   }
   return g;
 }
-async function D(a, e) {
+async function q(a, e) {
   let t = null;
   if (a.url && (t = new URL(a.url).origin), t !== self.location.origin)
     throw new l("cross-origin-copy-response", { origin: t });
@@ -119,17 +119,17 @@ async function D(a, e) {
     headers: new Headers(s.headers),
     status: s.status,
     statusText: s.statusText
-  }, c = e ? e(n) : n, r = S() ? s.body : await s.blob();
+  }, c = e ? e(n) : n, r = D() ? s.body : await s.blob();
   return new Response(r, c);
 }
-const q = (a) => new URL(String(a), location.href).href.replace(new RegExp(`^${location.origin}`), "");
+const F = (a) => new URL(String(a), location.href).href.replace(new RegExp(`^${location.origin}`), "");
 function P(a, e) {
   const t = new URL(a);
   for (const s of e)
     t.searchParams.delete(s);
   return t.href;
 }
-async function F(a, e, t, s) {
+async function j(a, e, t, s) {
   const n = P(e.url, t);
   if (e.url === n)
     return a.match(e, s);
@@ -140,7 +140,7 @@ async function F(a, e, t, s) {
       return a.match(i, s);
   }
 }
-class j {
+class H {
   /**
    * Creates a promise and exposes its resolve and reject functions as methods.
    */
@@ -150,12 +150,12 @@ class j {
     });
   }
 }
-const H = /* @__PURE__ */ new Set();
-async function B() {
-  for (const a of H)
+const B = /* @__PURE__ */ new Set();
+async function $() {
+  for (const a of B)
     await a();
 }
-function $(a) {
+function G(a) {
   return new Promise((e) => setTimeout(e, a));
 }
 try {
@@ -165,7 +165,7 @@ try {
 function m(a) {
   return typeof a == "string" ? new Request(a) : a;
 }
-class G {
+class V {
   /**
    * Creates a new instance associated with the passed strategy and event
    * that's handling the request.
@@ -183,7 +183,7 @@ class G {
    *     {@link workbox-routing~matchCallback} (if applicable).
    */
   constructor(e, t) {
-    this._cacheKeys = {}, Object.assign(this, t), this.event = t.event, this._strategy = e, this._handlerDeferred = new j(), this._extendLifetimePromises = [], this._plugins = [...e.plugins], this._pluginStateMap = /* @__PURE__ */ new Map();
+    this._cacheKeys = {}, Object.assign(this, t), this.event = t.event, this._strategy = e, this._handlerDeferred = new H(), this._extendLifetimePromises = [], this._plugins = [...e.plugins], this._pluginStateMap = /* @__PURE__ */ new Map();
     for (const s of this._plugins)
       this._pluginStateMap.set(s, {});
     this.event.waitUntil(this._handlerDeferred.promise);
@@ -297,16 +297,16 @@ class G {
    */
   async cachePut(e, t) {
     const s = m(e);
-    await $(0);
+    await G(0);
     const n = await this.getCacheKey(s, "write");
     if (!t)
       throw new l("cache-put-with-no-response", {
-        url: q(n.url)
+        url: F(n.url)
       });
     const c = await this._ensureResponseSafeToCache(t);
     if (!c)
       return !1;
-    const { cacheName: r, matchOptions: i } = this._strategy, o = await self.caches.open(r), h = this.hasCallback("cacheDidUpdate"), p = h ? await F(
+    const { cacheName: r, matchOptions: i } = this._strategy, o = await self.caches.open(r), h = this.hasCallback("cacheDidUpdate"), p = h ? await j(
       // TODO(philipwalton): the `__WB_REVISION__` param is a precaching
       // feature. Consider into ways to only add this behavior if using
       // precaching.
@@ -319,7 +319,7 @@ class G {
       await o.put(n, h ? c.clone() : c);
     } catch (u) {
       if (u instanceof Error)
-        throw u.name === "QuotaExceededError" && await B(), u;
+        throw u.name === "QuotaExceededError" && await $(), u;
     }
     for (const u of this.iterateCallbacks("cacheDidUpdate"))
       await u({
@@ -471,7 +471,7 @@ class G {
     return s || t && t.status !== 200 && (t = void 0), t;
   }
 }
-class V {
+class Q {
   /**
    * Creates a new instance of the strategy and sets all documented option
    * properties as public instance properties.
@@ -547,7 +547,7 @@ class V {
       event: e,
       request: e.request
     });
-    const t = e.event, s = typeof e.request == "string" ? new Request(e.request) : e.request, n = "params" in e ? e.params : void 0, c = new G(this, { event: t, request: s, params: n }), r = this._getResponse(c, s, t), i = this._awaitComplete(r, c, s, t);
+    const t = e.event, s = typeof e.request == "string" ? new Request(e.request) : e.request, n = "params" in e ? e.params : void 0, c = new V(this, { event: t, request: s, params: n }), r = this._getResponse(c, s, t), i = this._awaitComplete(r, c, s, t);
     return [r, i];
   }
   async _getResponse(e, t, s) {
@@ -593,7 +593,7 @@ class V {
       throw r;
   }
 }
-class d extends V {
+class d extends Q {
   /**
    *
    * @param {Object} [options]
@@ -691,10 +691,10 @@ d.defaultPrecacheCacheabilityPlugin = {
 };
 d.copyRedirectedCacheableResponsesPlugin = {
   async cacheWillUpdate({ response: a }) {
-    return a.redirected ? await D(a) : a;
+    return a.redirected ? await q(a) : a;
   }
 };
-class Q {
+class z {
   /**
    * Create a new PrecacheController.
    *
@@ -710,7 +710,7 @@ class Q {
       cacheName: C.getPrecacheName(e),
       plugins: [
         ...t,
-        new W({ precacheController: this })
+        new S({ precacheController: this })
       ],
       fallbackToNetwork: s
     }), this.install = this.install.bind(this), this.activate = this.activate.bind(this);
@@ -778,7 +778,7 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
    */
   install(e) {
     return k(e, async () => {
-      const t = new A();
+      const t = new W();
       this.strategy.plugins.push(t);
       for (const [c, r] of this._urlsToCacheKeys) {
         const i = this._cacheKeysToIntegrities.get(r), o = this._urlsToCacheModes.get(c), h = new Request(c, {
@@ -892,7 +892,7 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
   }
 }
 let U;
-const K = () => (U || (U = new Q()), U);
+const T = () => (U || (U = new z()), U);
 try {
   self["workbox:routing:7.0.0"] && _();
 } catch {
@@ -922,7 +922,7 @@ class w {
     this.catchHandler = R(e);
   }
 }
-class z extends w {
+class J extends w {
   /**
    * If the regular expression contains
    * [capture groups]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#grouping-back-references},
@@ -945,7 +945,7 @@ class z extends w {
     super(n, t, s);
   }
 }
-class J {
+class X {
   /**
    * Initializes a new Router.
    */
@@ -1128,14 +1128,14 @@ class J {
   }
 }
 let y;
-const X = () => (y || (y = new J(), y.addFetchListener(), y.addCacheListener()), y);
-function Y(a, e, t) {
+const Y = () => (y || (y = new X(), y.addFetchListener(), y.addCacheListener()), y);
+function Z(a, e, t) {
   let s;
   if (typeof a == "string") {
     const c = new URL(a, location.href), r = ({ url: i }) => i.href === c.href;
     s = new w(r, e, t);
   } else if (a instanceof RegExp)
-    s = new z(a, e, t);
+    s = new J(a, e, t);
   else if (typeof a == "function")
     s = new w(a, e, t);
   else if (a instanceof w)
@@ -1146,17 +1146,17 @@ function Y(a, e, t) {
       funcName: "registerRoute",
       paramName: "capture"
     });
-  return X().registerRoute(s), s;
+  return Y().registerRoute(s), s;
 }
-function Z(a, e = []) {
+function ee(a, e = []) {
   for (const t of [...a.searchParams.keys()])
     e.some((s) => s.test(t)) && a.searchParams.delete(t);
   return a;
 }
-function* ee(a, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], directoryIndex: t = "index.html", cleanURLs: s = !0, urlManipulation: n } = {}) {
+function* te(a, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], directoryIndex: t = "index.html", cleanURLs: s = !0, urlManipulation: n } = {}) {
   const c = new URL(a, location.href);
   c.hash = "", yield c.href;
-  const r = Z(c, e);
+  const r = ee(c, e);
   if (yield r.href, t && r.pathname.endsWith("/")) {
     const i = new URL(r.href);
     i.pathname += t, yield i.href;
@@ -1171,7 +1171,7 @@ function* ee(a, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], direct
       yield o.href;
   }
 }
-class te extends w {
+class se extends w {
   /**
    * @param {PrecacheController} precacheController A `PrecacheController`
    * instance used to both match requests and respond to fetch events.
@@ -1191,7 +1191,7 @@ class te extends w {
   constructor(e, t) {
     const s = ({ request: n }) => {
       const c = e.getURLsToCacheKeys();
-      for (const r of ee(n.url, t)) {
+      for (const r of te(n.url, t)) {
         const i = c.get(r);
         if (i) {
           const o = e.getIntegrityForCacheKey(i);
@@ -1202,49 +1202,49 @@ class te extends w {
     super(s, e.strategy);
   }
 }
-function se(a) {
-  const e = K(), t = new te(e, a);
-  Y(t);
+function ae(a) {
+  const e = T(), t = new se(e, a);
+  Z(t);
 }
-const ae = "-precache-", ne = async (a, e = ae) => {
+const ne = "-precache-", ce = async (a, e = ne) => {
   const s = (await self.caches.keys()).filter((n) => n.includes(e) && n.includes(self.registration.scope) && n !== a);
   return await Promise.all(s.map((n) => self.caches.delete(n))), s;
 };
-function ce() {
+function re() {
   self.addEventListener("activate", (a) => {
     const e = C.getPrecacheName();
-    a.waitUntil(ne(e).then((t) => {
+    a.waitUntil(ce(e).then((t) => {
     }));
   });
 }
-function re(a) {
-  K().precache(a);
+function ie(a) {
+  T().precache(a);
 }
-function ie(a, e) {
-  re(a), se(e);
+function oe(a, e) {
+  ie(a), ae(e);
 }
-function oe() {
+function le() {
   self.addEventListener("activate", () => self.clients.claim());
 }
 self.skipWaiting();
-oe();
-ce();
-ie([{"revision":null,"url":"assets/index-444ee569.js"},{"revision":null,"url":"assets/index-c7caa306.css"},{"revision":"9a995a7e42cfb5e0e34762ac7d994152","url":"index.html"},{"revision":"c3cd57c7634b3cd71d789048dc28980d","url":"registerSW.js"},{"revision":"9cb2f31c709cfc7dbc2b0266d1540841","url":"favicon.ico"},{"revision":"1d39a9457ee3af131f98fff2393644d5","url":"apple-touch-icon.png"},{"revision":"40f73a3e5d62b60229d10165c0d33d0e","url":"safari-pinned-tab.svg"},{"revision":"62e321804437ab72b565a350b4e4031e","url":"manifest-icon-192.maskable.png"},{"revision":"338d340b3088b8bc6e211249a9f8029e","url":"manifest-icon-512.maskable.png"},{"revision":"2264635fd04fce9834036299778a271a","url":"manifest.webmanifest"}]);
-const T = "v6", E = "s-app-" + T, le = "d-app-" + T, he = [];
+le();
+re();
+oe([{"revision":null,"url":"assets/index-399928c0.js"},{"revision":null,"url":"assets/index-c7caa306.css"},{"revision":"01a7b1a5ff869001f846b3945d8dda02","url":"index.html"},{"revision":"c3cd57c7634b3cd71d789048dc28980d","url":"registerSW.js"},{"revision":"9cb2f31c709cfc7dbc2b0266d1540841","url":"favicon.ico"},{"revision":"1d39a9457ee3af131f98fff2393644d5","url":"apple-touch-icon.png"},{"revision":"40f73a3e5d62b60229d10165c0d33d0e","url":"safari-pinned-tab.svg"},{"revision":"62e321804437ab72b565a350b4e4031e","url":"manifest-icon-192.maskable.png"},{"revision":"338d340b3088b8bc6e211249a9f8029e","url":"manifest-icon-512.maskable.png"},{"revision":"2264635fd04fce9834036299778a271a","url":"manifest.webmanifest"}]);
+const E = "v6", v = "s-app-" + E, he = "d-app-" + E, ue = [];
 self.addEventListener("install", async () => {
-  await (await caches.open(E)).addAll(he);
+  await (await caches.open(v)).addAll(ue);
 });
 self.addEventListener("activate", async () => {
   const a = await caches.keys();
   await Promise.all(
-    a.filter((e) => e !== E).filter((e) => e !== le).map((e) => caches.delete(e))
+    a.filter((e) => e !== v).filter((e) => e !== he).map((e) => caches.delete(e))
   );
 });
 self.addEventListener("fetch", (a) => {
   const { request: e } = a;
-  a.respondWith(ue(e));
+  a.respondWith(fe(e));
 });
-async function ue(a) {
+async function fe(a) {
   return await caches.match(a) ?? await fetch(a);
 }
 self.addEventListener(
@@ -1257,7 +1257,10 @@ self.addEventListener(
       }).then((t) => {
         if (t.length)
           for (const s of t)
-            "focus" in s && (s.focus(), e.url && s.navigate(e.url), fe(s.id, { type: "CLEAR_BADGE" }));
+            "focus" in s && (s.focus(), e.url && K(s.id, {
+              type: "NAVIGATE_TO",
+              payload: e.url
+            }), K(s.id, { type: "CLEAR_BADGE" }));
         else
           self.clients.openWindow && e.url && self.clients.openWindow(e.url ?? "/").then((s) => s ? s.focus() : null);
       })
@@ -1271,7 +1274,7 @@ self.addEventListener("message", (a) => {
     payload: `SW Answer: Message received: ${a.data}`
   });
 });
-async function fe(a, e) {
+async function K(a, e) {
   (await self.clients.get(a)).postMessage(e);
 }
 async function de(a) {
