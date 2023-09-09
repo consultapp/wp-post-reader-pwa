@@ -43,6 +43,7 @@ const registerServiceWorker = async () => {
           'controllerchange',
           function () {
             if (refreshing) return
+            console.log('window reload after controller change')
             window.location.reload()
             refreshing = true
           }
