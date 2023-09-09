@@ -22,3 +22,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+
+#prod
+#dist
