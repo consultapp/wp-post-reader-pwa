@@ -1,4 +1,4 @@
-const cacheVersion = '14'
+const cacheVersion = '15'
 const cacheName = 'd-app-' + cacheVersion
 const assetUrls = []
 const isAutoSWUpdateOn = true
