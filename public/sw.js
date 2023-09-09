@@ -113,13 +113,19 @@ self.addEventListener(
                   //   payload: data.url,
                   // })
                 }
-                messageClient(client.id, { type: 'CLEAR_BADGE' })
               }
             }
           else if ('openWindow' in self.clients) {
             if (data.url)
               self.clients.openWindow(data.url).then((client) => {
-                if ('navigate' in client) client.navigate(data.url)
+                // if ('navigate' in client) client.navigate(data.url)
+                if (client.id) {
+                  messageClient(client.id, { type: 'CLEAR_BADGE' })
+                  messageClient(client.id, {
+                    type: 'NAVIGATE_TO',
+                    payload: data.url,
+                  })
+                }
               })
           }
         })
