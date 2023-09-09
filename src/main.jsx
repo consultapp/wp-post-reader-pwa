@@ -38,6 +38,15 @@ const registerServiceWorker = async () => {
             alert('SW was updated.')
           }
         })
+        let refreshing
+        navigator.serviceWorker.addEventListener(
+          'controllerchange',
+          function () {
+            if (refreshing) return
+            window.location.reload()
+            refreshing = true
+          }
+        )
       })
     } catch (error) {
       console.error(`Registration failed with ${error}`)
