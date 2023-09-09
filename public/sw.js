@@ -105,20 +105,18 @@ self.addEventListener(
             for (const client of clientList) {
               if ('focus' in client) {
                 if (data.url) {
-                  client.navigate(data.url)
+                  messageClient(client.id, { type: 'CLEAR_BADGE' })
+                  messageClient(client.id, {
+                    type: 'NAVIGATE_TO',
+                    payload: data.url,
+                  })
                   client.focus()
-
-                  // messageClient(client.id, {
-                  //   type: 'NAVIGATE_TO',
-                  //   payload: data.url,
-                  // })
                 }
               }
             }
           else if ('openWindow' in self.clients) {
             if (data.url)
               self.clients.openWindow(data.url).then((client) => {
-                // if ('navigate' in client) client.navigate(data.url)
                 if (client.id) {
                   messageClient(client.id, { type: 'CLEAR_BADGE' })
                   messageClient(client.id, {
