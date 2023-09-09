@@ -10,7 +10,7 @@ import initNotifications from './serviceWorker/notification'
 cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST)
 
-const cacheVersion = '11'
+const cacheVersion = '12'
 const staticCacheName = 's-app-' + cacheVersion
 const dynamicCacheName = 'd-app-' + cacheVersion
 
