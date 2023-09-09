@@ -156,7 +156,6 @@ function messageReducer(action) {
   //   payload: `SW Answer: Message received: ${event.data}`,
   // });
 }
-
 // **************************
 
 // async function sendMessage(data) {
