@@ -118,6 +118,7 @@ self.addEventListener(
           else if ('openWindow' in self.clients) {
             if (data.url)
               self.clients.openWindow(data.url).then((client) => {
+                client.navigate(data.url)
                 if (client.id) {
                   messageClient(client.id, { type: 'CLEAR_BADGE' })
                   messageClient(client.id, {
