@@ -10,10 +10,10 @@ export default defineConfig({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'customSW.js',
-      // devOptions: {
-      //   enabled: true,
-      //   type: 'module',
-      // },
+      devOptions: {
+        enabled: true,
+        type: 'module',
+      },
       manifest: {
         name: 'PWA | Wordpress posts reader',
         short_name: 'PWA WP post reader',
