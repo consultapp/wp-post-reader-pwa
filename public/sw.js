@@ -19,7 +19,9 @@ self.addEventListener('install', async (event) => {
 //
 self.addEventListener('activate', async (event) => {
   // AUTOUPDATE OF SW
-  if (isAutoSWUpdateOn) event.waitUntil(self.clients.claim())
+  if (isAutoSWUpdateOn) {
+    event.waitUntil(self.clients.claim())
+  }
 
   const cacheNames = await caches.keys()
   await Promise.all(
@@ -116,17 +118,18 @@ self.addEventListener(
               }
             }
           else if ('openWindow' in self.clients) {
-            if (data.url)
-              self.clients.openWindow(data.url).then((client) => {
-                client.navigate(data.url)
-                if (client.id) {
-                  messageClient(client.id, { type: 'CLEAR_BADGE' })
-                  messageClient(client.id, {
-                    type: 'NAVIGATE_TO',
-                    payload: data.url,
-                  })
-                }
-              })
+            if (data.url) self.clients.openWindow(data.url)
+            // .then((client) => {
+            //     client.navigate(data.url).then(() => {
+            //       if (client.id) {
+            //         messageClient(client.id, { type: 'CLEAR_BADGE' })
+            //         messageClient(client.id, {
+            //           type: 'NAVIGATE_TO',
+            //           payload: data.url,
+            //         })
+            //       }
+            //     })
+            //   })
           }
         })
     )
