@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview --port 4174"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -31,7 +31,6 @@
     "eslint-plugin-react-refresh": "^0.3.4",
     "sass": "^1.62.1",
     "vite": "^4.3.2",
-    "vite-plugin-pwa": "^0.16.4",
     "workbox-window": "^7.0.0"
   }
 }
