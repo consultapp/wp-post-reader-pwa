@@ -3,7 +3,7 @@
   "description": "PWA | Wordpress posts reader",
   "homepage": "https://github.com/consultapp/wp-post-reader-pwa",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
