@@ -23,7 +23,6 @@ export default function EventSWListeners() {
       navigator.serviceWorker.addEventListener('message', (e) => {
         const { data } = e
         console.log('WINDOW: data from SW', data)
-
         messageReducer(data)
       })
     })

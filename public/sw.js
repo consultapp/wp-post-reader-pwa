@@ -111,26 +111,43 @@ async function sendMessage(action) {
   )
 }
 
-async function showGoToNotification(data) {
+function showNotification(title, payload) {
   if (!(self.Notification && self.Notification.permission === 'granted')) {
     return
   }
-  const title = data.title || ''
-  const icon = '/logo.png'
 
-  self.registration.showNotification('Открыть статью', {
-    body: title,
-    data,
-    tag: 'sgo-to-notification',
-    icon,
+  self.registration.showNotification(title ?? 'Notification', {
+    icon: '/logo.png',
+    body: 'no_data',
+    ...payload,
   })
 }
+
+function showGoToNotification(data) {
+  showNotification('Открыть статью', {
+    body: data.title ?? '',
+    data,
+    tag: 'sgo-to-notification',
+  })
+}
+
 // MESSAGE REDUCER
+let interval = null
 function messageReducer(action) {
   const { type, data } = action
   switch (type) {
     case 'SHOW_GOTO_NOTIFICATION':
       showGoToNotification(data)
+      break
+
+    case 'START_SHOW_INTERVAL_NOTIFICATIONS':
+      interval = setInterval(() => {
+        showNotification('Регулярное сообщение от SW ')
+      }, 10000)
+      break
+
+    case 'END_SHOW_INTERVAL_NOTIFICATIONS':
+      clearInterval(interval)
       break
   }
 

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import styles from "./style.module.scss";
+import { Link } from 'react-router-dom'
+import styles from './style.module.scss'
+import { sendMessageToSW } from '../../utils/functions'
 
 export default function Menu({ isOpen, toggleButton }) {
   return (
@@ -15,7 +16,7 @@ export default function Menu({ isOpen, toggleButton }) {
         className={`menu-toggle hamburger hamburger--spin main-menu-btn is-not-active font-secondary ${styles.buttonHamburger}`}
         type="button"
         onClick={() => {
-          toggleButton(isOpen);
+          toggleButton(isOpen)
         }}
       >
         <span className="hamburger-box">
@@ -31,8 +32,32 @@ export default function Menu({ isOpen, toggleButton }) {
           >
             <Link to="/">Статьи</Link>
           </li>
+          <li
+            id="menu-item-1530"
+            className="menu-item menu-item-type-post_type menu-item-object-page menu-item-1530"
+          >
+            <a
+              onClick={(e) => {
+                e.preventDefault()
+                console.log('start')
+                sendMessageToSW('START_SHOW_INTERVAL_NOTIFICATIONS', {})
+              }}
+            >
+              Start Notif
+            </a>
+
+            <a
+              onClick={(e) => {
+                e.preventDefault()
+                console.log('end')
+                sendMessageToSW('END_SHOW_INTERVAL_NOTIFICATIONS', {})
+              }}
+            >
+              End Notif
+            </a>
+          </li>
         </ul>
       )}
     </nav>
-  );
+  )
 }
