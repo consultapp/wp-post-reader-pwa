@@ -22,7 +22,6 @@ self.addEventListener('activate', async (event) => {
   if (isAutoSWUpdateOn) {
     event.waitUntil(self.clients.claim())
   }
-
   const cacheNames = await caches.keys()
   await Promise.all(
     cacheNames
@@ -46,6 +45,102 @@ self.addEventListener('fetch', (event) => {
     })
   )
 })
+
+// *************************************************************************
+
+self.addEventListener(
+  'notificationclick',
+  (event) => {
+    const { data } = event.notification
+
+    event.notification.close()
+    event.waitUntil(
+      self.clients
+        .matchAll({
+          type: 'window',
+        })
+        .then((clientList) => {
+          if (clientList.length)
+            for (const client of clientList) {
+              if ('focus' in client) {
+                if (data.url) {
+                  client.focus()
+                  messageClient(client.id, {
+                    type: 'NAVIGATE_TO',
+                    payload: data.url,
+                  })
+                }
+              }
+            }
+          else if ('openWindow' in self.clients) {
+            if (data.url)
+              self.clients.openWindow(data.url).then((client) => {
+                console.log('newWindow')
+                // if (client) client.focus()
+                // if (client.id) {
+                //   sendMessage({ type: 'CLEAR_BADGE' })
+                //   sendMessage({
+                //     type: 'NAVIGATE_TO',
+                //     payload: data.url,
+                //   })
+                // }
+              })
+          }
+        })
+    )
+  },
+  false
+)
+
+self.addEventListener('message', (event) => {
+  messageReducer(event?.data ?? {})
+  // console.log('SW: Message received:', data)
+})
+
+async function messageClient(clientId, action) {
+  const client = await self.clients.get(clientId)
+  client.postMessage(action)
+}
+
+async function sendMessage(action) {
+  let allClients = await self.clients.matchAll({ includeUncontrolled: true })
+  return Promise.all(
+    allClients.map((client) => {
+      return client.postMessage(action)
+    })
+  )
+}
+
+async function showGoToNotification(data) {
+  if (!(self.Notification && self.Notification.permission === 'granted')) {
+    return
+  }
+  const title = data.title || ''
+  const icon = '/logo.png'
+
+  self.registration.showNotification('Открыть статью', {
+    body: title,
+    data,
+    tag: 'sgo-to-notification',
+    icon,
+  })
+}
+// MESSAGE REDUCER
+function messageReducer(action) {
+  const { type, data } = action
+  switch (type) {
+    case 'SHOW_GOTO_NOTIFICATION':
+      showGoToNotification(data)
+      break
+  }
+
+  // sendMessage({
+  //   type: "MESSAGE",
+  //   payload: `SW Answer: Message received: ${event.data}`,
+  // });
+}
+
+// **************************
 
 // async function sendMessage(data) {
 //   let allClients = await self.clients.matchAll({ includeUncontrolled: true })
@@ -88,103 +183,3 @@ self.addEventListener('fetch', (event) => {
 //       }
 //     });
 // }
-
-// *************************************************************************
-
-self.addEventListener(
-  'notificationclick',
-  (event) => {
-    const { data } = event.notification
-
-    event.notification.close()
-    event.waitUntil(
-      self.clients
-        .matchAll({
-          type: 'window',
-        })
-        .then((clientList) => {
-          if (clientList.length)
-            for (const client of clientList) {
-              if ('focus' in client) {
-                if (data.url) {
-                  client.navigate(data.url)
-                  client.focus()
-
-                  // messageClient(client.id, {
-                  //   type: 'NAVIGATE_TO',
-                  //   payload: data.url,
-                  // })
-                }
-              }
-            }
-          else if ('openWindow' in self.clients) {
-            if (data.url)
-              self.clients.openWindow(data.url).then((client) => {
-                client.navigate(data.url).then(() => {
-                  if (client.id) {
-                    sendMessage({ type: 'CLEAR_BADGE' })
-                    sendMessage({
-                      type: 'NAVIGATE_TO',
-                      payload: data.url,
-                    })
-                  }
-                })
-              })
-          }
-        })
-    )
-  },
-  false
-)
-
-self.addEventListener('message', (event) => {
-  messageReducer(event?.data ?? {})
-  // console.log('SW: Message received:', data)
-})
-
-async function messageClient(clientId, data) {
-  const client = await self.clients.get(clientId)
-  client.postMessage(data)
-}
-
-async function sendMessage(data) {
-  let allClients = await self.clients.matchAll({ includeUncontrolled: true })
-  return Promise.all(
-    allClients.map((client) => {
-      return client.postMessage(data)
-    })
-  )
-}
-
-async function showGoToNotification(data) {
-  if (!(self.Notification && self.Notification.permission === 'granted')) {
-    return
-  }
-  const title = data.title || ''
-  const icon = '/logo.png'
-
-  self.registration.showNotification('Открыть статью', {
-    body: title,
-    data,
-    tag: 'sgo-to-notification',
-    icon,
-  })
-}
-
-// MESSAGE REDUCER
-function messageReducer(action) {
-  const { type, data } = action
-  switch (type) {
-    case 'SHOW_GOTO_NOTIFICATION':
-      showGoToNotification(data)
-      break
-    case 'SKIP_WAITING':
-      self.skipWaiting()
-      break
-  }
-
-  // sendMessage({
-  //   type: "MESSAGE",
-  //   payload: `SW Answer: Message received: ${event.data}`,
-  // });
-}

@@ -34,12 +34,8 @@ const registerServiceWorker = async () => {
         newWorker.addEventListener('statechange', () => {
           // newWorker.state has changed
           console.log('statechange fired:', newWorker)
-          if (newWorker.state === 'installed') {
-            // navigator.serviceWorker.ready.then((registration) => {
-            //   registration.active.postMessage({
-            //     type: 'SKIP_WAITING',
-            //   })
-            // })
+          if (newWorker.state === 'activated') {
+            alert('SW was updated.')
           }
         })
       })
