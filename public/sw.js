@@ -117,10 +117,7 @@ self.addEventListener(
               }
             }
           else if ('openWindow' in self.clients) {
-            if (data.url)
-              self.clients.openWindow('/').then((client) => {
-                if ('navigate' in client) client.navigate(data.url)
-              })
+            if (data.url) self.clients.openWindow(data.url)
           }
         })
     )
