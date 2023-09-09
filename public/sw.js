@@ -1,8 +1,4 @@
-// import initNotifications from '../src/serviceWorker/notification'
-
-// import initNotifications from './serviceWorker/notification'
-
-const cacheVersion = '13'
+const cacheVersion = '14'
 const cacheName = 'd-app-' + cacheVersion
 const assetUrls = []
 const isAutoSWUpdateOn = true
