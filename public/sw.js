@@ -1,7 +1,7 @@
-const cacheVersion = "15";
-const cacheName = "d-app-" + cacheVersion;
+const cacheVersion = "16";
+const cacheName = "appCache_v" + cacheVersion;
 const assetUrls = [];
-const isAutoSWUpdateOn = true;
+const isPromtSWUpdateOn = false;
 
 self.addEventListener("install", async (event) => {
   try {
@@ -11,17 +11,18 @@ self.addEventListener("install", async (event) => {
       })
     );
     // AUTOUPDATE OF SW
-    if (isAutoSWUpdateOn) self.skipWaiting();
+    if (!isPromtSWUpdateOn) self.skipWaiting();
   } catch (error) {
     throw "Open cache error";
   }
 });
-//
+
 self.addEventListener("activate", async (event) => {
   // AUTOUPDATE OF SW
-  if (isAutoSWUpdateOn) {
+  if (!isPromtSWUpdateOn) {
     event.waitUntil(self.clients.claim());
   }
+
   const cacheNames = await caches.keys();
   await Promise.all(
     cacheNames
@@ -47,6 +48,7 @@ self.addEventListener("fetch", (event) => {
 });
 
 // *************************************************************************
+
 self.addEventListener(
   "notificationclick",
   (event) => {
@@ -93,7 +95,7 @@ async function messageClient(clientId, action) {
   client.postMessage(action);
 }
 
-async function sendMessage(action) {
+async function messageAllClients(action) {
   let allClients = await self.clients.matchAll({ includeUncontrolled: true });
   return Promise.all(
     allClients.map((client) => {
@@ -102,14 +104,18 @@ async function sendMessage(action) {
   );
 }
 
+const initialNotificationData = {
+  icon: "/logo.png",
+  body: "",
+};
+
 function showNotification(title, payload) {
   if (!(self.Notification && self.Notification.permission === "granted")) {
     return;
   }
 
   self.registration.showNotification(title ?? "Notification", {
-    icon: "/logo.png",
-    body: "",
+    ...initialNotificationData,
     ...payload,
   });
 }
@@ -123,22 +129,11 @@ function showGoToNotification(data) {
 }
 
 // MESSAGE REDUCER
-let interval = null;
 function messageReducer(action) {
   const { type, data } = action;
   switch (type) {
     case "SHOW_GOTO_NOTIFICATION":
       showGoToNotification(data);
-      break;
-
-    case "START_SHOW_INTERVAL_NOTIFICATIONS":
-      interval = setInterval(() => {
-        showNotification("Регулярное сообщение от SW ");
-      }, 10000);
-      break;
-
-    case "END_SHOW_INTERVAL_NOTIFICATIONS":
-      clearInterval(interval);
       break;
   }
 

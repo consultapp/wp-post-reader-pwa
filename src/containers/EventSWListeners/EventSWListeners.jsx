@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const DEBUG_ENABLED = import.meta.env.VITE_DEBUG_ENABLED;
+const VITE_DEV = import.meta.env.VITE_DEV;
 
 export default function EventSWListeners() {
   const navigate = useNavigate();
@@ -17,6 +17,12 @@ export default function EventSWListeners() {
       case "NAVIGATE_TO":
         navigate(payload);
         break;
+      case "WE_ARE_OFFLINE":
+        alert("WE_ARE_OFFLINE");
+        break;
+      case "WE_ARE_ONLINE":
+        alert("WE_ARE_ONLINE");
+        break;
     }
   }
 
@@ -24,7 +30,7 @@ export default function EventSWListeners() {
     navigator.serviceWorker.ready.then(() => {
       navigator.serviceWorker.addEventListener("message", (e) => {
         const { data } = e;
-        if (DEBUG_ENABLED) console.log("WINDOW: data from SW", data);
+        if (VITE_DEV) console.log("WINDOW: data from SW", data);
         messageReducer(data);
       });
     });
