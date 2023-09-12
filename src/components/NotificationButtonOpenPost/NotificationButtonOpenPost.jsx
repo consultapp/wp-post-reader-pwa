@@ -1,10 +1,10 @@
-import { sendMessageToSW } from '../../utils/functions'
+import { sendMessageToSW } from "../../utils/functions";
 
 function notifyMe(title, url) {
   Notification.requestPermission().then((result) => {
-    if (result === 'granted') {
-      if ('setAppBadge' in navigator) navigator.setAppBadge(true)
-      sendMessageToSW('SHOW_GOTO_NOTIFICATION', { title, url })
+    if (result === "granted") {
+      if ("setAppBadge" in navigator) navigator.setAppBadge(true);
+      sendMessageToSW("SHOW_GOTO_NOTIFICATION", { title, url });
       // navigator.serviceWorker.ready.then((registration) => {
       //   registration.active.postMessage({
       //     type: 'SHOW_GOTO_NOTIFICATION',
@@ -12,7 +12,7 @@ function notifyMe(title, url) {
       //   })
       // })
     }
-  })
+  });
 }
 
 export default function NotificationButtonOpenPost({ title, url }) {
@@ -20,13 +20,13 @@ export default function NotificationButtonOpenPost({ title, url }) {
     <span
       className="entry-more-link"
       onClick={(e) => {
-        e.preventDefault()
-        notifyMe(title, url)
+        e.preventDefault();
+        notifyMe(title, url);
       }}
     >
       <span>Открыть через уведомление</span>
     </span>
-  )
+  );
 }
 
 // if (!("Notification" in window)) {
